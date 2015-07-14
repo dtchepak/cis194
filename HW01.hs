@@ -1,33 +1,39 @@
 {-# OPTIONS_GHC -Wall #-}
 module HW01 where
 
+import Data.List
+
 -- Exercise 1 -----------------------------------------
 
 -- Get the last digit from a number
 lastDigit :: Integer -> Integer
-lastDigit = undefined
+lastDigit = (`mod` 10)
 
 -- Drop the last digit from a number
 dropLastDigit :: Integer -> Integer
-dropLastDigit = undefined
+dropLastDigit = (`div` 10)
 
 -- Exercise 2 -----------------------------------------
 
 toRevDigits :: Integer -> [Integer]
-toRevDigits = undefined
+toRevDigits =
+    unfoldr $
+        \x -> if x>0 then Just (lastDigit x, dropLastDigit x) else Nothing
 
 -- Exercise 3 -----------------------------------------
 
 -- Double every second number in a list starting on the left.
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+doubleEveryOther (a:b:c) = a : 2 * b : doubleEveryOther c
+doubleEveryOther a       = a
 
 -- Exercise 4 -----------------------------------------
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
-
+sumDigits =
+    let flatMap = (=<<)
+    in sum . flatMap toRevDigits
 
 -- Exercise 5 -----------------------------------------
 
